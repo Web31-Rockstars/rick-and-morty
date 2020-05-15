@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
 import './App.scss';
+import Character from './component/character';
 
 function App() {
   const [url, setUrl] = useState("https://rickandmortyapi.com/api/character/?name=")
   const [info, setInfo] = useState({})
   const [results, setResults] = useState([])
   const [search, setSearch] = useState("")
+
 
   useEffect(()=> {
     console.log('url: ', url)
@@ -44,15 +46,7 @@ function App() {
       <main>
         <section className="characters"> 
           {results.map((result, index)=> (
-            <article key={index} className="card">
-              <img src={result.image} alt={`photo of ${result.name}`} />
-              <p>Name: {result.name}</p>
-              <p>Origin: {result.origin.name}</p>
-              <p>Location: {result.location.name}</p>
-              <p>Species: {result.species}</p>
-              <p>Status: {result.status}</p>
-              <p>Type: {result.type}</p>
-            </article>
+            <Character key={index} result={result} />
           ))}
         </section>
       </main>
