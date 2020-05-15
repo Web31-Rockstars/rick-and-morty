@@ -4,10 +4,11 @@ import './App.scss';
 import Character from './component/character';
 
 function App() {
-  const [url, setUrl] = useState("https://rickandmortyapi.com/api/character/?name=")
+  const [url] = useState("https://rickandmortyapi.com/api/character/")
   const [info, setInfo] = useState({})
   const [results, setResults] = useState([])
   const [search, setSearch] = useState("")
+  const [page, setPage] = useState(1)
 
 
   useEffect(()=> {
@@ -18,25 +19,45 @@ function App() {
   }, [url, info, results, search])
 
   useEffect(() => {
-    axios.get(`${url}${search}`)
+    axios.get(`${url}?page=${page}&name=${search}`)
       .then((result)=>{
-        // console.log(result)
         setInfo(result.data.info)
         setResults(result.data.results)
       })
       .catch((error)=> {
+        setPage(1)
         console.log(error)
       })
-  }, [search])
+  }, [search, page])
 
-  // useEffect(()=>{
-  //   setResults("this is a test")
-  // },[])
+  const nextHandler = (event) => {
+    event.preventDefault()
+    if(page <= info.pages){
+      setPage(page + 1)
+    }else{
+      setPage(1)
+    }
+  } 
 
+  const prevHandler = (event) => {
+    event.preventDefault()
+    if(page>1){
+      setPage(page -1)
+    }else{
+      setPage(info.pages)
+    }
+  }
 
   return (
     <>
       <header>
+        <button
+          onClick={(event) => prevHandler(event)}
+        >-</button>
+        <p>{page}/{info.pages}</p>
+        <button
+          onClick={(event) => nextHandler(event)}
+        >+</button>
         <p>Search</p><input onChange={(e)=>{
           setSearch(e.target.value)
         }} 
