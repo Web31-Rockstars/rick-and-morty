@@ -12,7 +12,7 @@ const Character = (props) => {
           setDisplayToggle(!displayToggle)
         }}
       >
-        <img src={props.result.image} alt={`photo of ${props.result.name}`} />
+        <img src={props.result.image} alt={`${props.result.name}`} />
       </button>
       {displayToggle && (<>
         <p>Name: {props.result.name}</p>
