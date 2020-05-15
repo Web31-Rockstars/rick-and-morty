@@ -34,20 +34,28 @@ function App() {
 
   return (
     <>
-      <input onChange={(e)=>{
-        setSearch(e.target.value)
-      }} 
-      value={search}
-      type="text"/>
-    <div className="card">
-      {results.map((result, index)=> (
-        <article key={index}>
-          <img src={result.image} alt={`photo of ${result.name}`} />
-          <p>{result.name}</p>
-          <p>{result.status}</p>
-        </article>
-      ))}
-    </div>
+      <header>
+        <p>Search</p><input onChange={(e)=>{
+          setSearch(e.target.value)
+        }} 
+        value={search}
+        type="text"/>
+      </header>
+      <main>
+        <section className="characters"> 
+          {results.map((result, index)=> (
+            <article key={index} className="card">
+              <img src={result.image} alt={`photo of ${result.name}`} />
+              <p>Name: {result.name}</p>
+              <p>Origin: {result.origin.name}</p>
+              <p>Location: {result.location.name}</p>
+              <p>Species: {result.species}</p>
+              <p>Status: {result.status}</p>
+              <p>Type: {result.type}</p>
+            </article>
+          ))}
+        </section>
+      </main>
     </>
   );
 }
